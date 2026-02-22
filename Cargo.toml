@@ -1,0 +1,12 @@
+[package]
+edition = "2024"
+name = "rsrem"
+description = "Remote compilation for rust files"
+license = "none"
+readme = "./README.md"
+version = "0.0.1"
+authors = ["kkettums"]
+
+[dependencies]
+clap = { version = "4.5", features = ["derive"] }
+reqwest = { version = "0.11", features = ["blocking", "json"] }
