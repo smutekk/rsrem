@@ -1,8 +1,9 @@
-use std::net::Ipv4Addr;
-
 use clap::Parser;
+use std::net::{Ipv4Addr, TcpStream};
+use std::path::{Path, PathBuf};
 
 const TARGET_IP: Ipv4Addr = Ipv4Addr::new(192, 168, 2, 74);
+const TARGET_PORT: &str = "6767";
 // TODO: Maybe use ipv6?
 
 #[derive(Parser, Debug)]
@@ -15,9 +16,17 @@ const TARGET_IP: Ipv4Addr = Ipv4Addr::new(192, 168, 2, 74);
 struct Args {
     ///
     #[arg(long)]
-    fahrenheit: bool,
+    folder: PathBuf,
 }
 
 fn main() {
-    println!("{:?}", TARGET_IP);
+    let args = Args::parse();
+    let folder_str = args.folder.to_str().unwrap();
+
+    let target_net: String = format!("{TARGET_IP}:{TARGET_PORT}");
+    let target_dir: PathBuf = Path::new(folder_str).to_path_buf();
+
+    let mut stream = TcpStream::connect("{TARGET_IP}");
+
+    println!("Using: {:?}", target_dir);
 }
